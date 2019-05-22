@@ -1,0 +1,14 @@
+{
+    "appenders": [
+        {
+            "type": "console"
+        },
+        {
+            "type": "dateFile",
+            "filename": "logs/booklist.log",
+            "pattern": "-yyyy-MM-dd",
+            "alwaysIncludePattern": true,
+            "category" : "error"
+        }
+    ]
+}
