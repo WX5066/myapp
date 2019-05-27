@@ -7,7 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const ejs = require('ejs');
-const log4js = require('./mid/log');
+//const log4js = require('./mid/log');
 
 var app = express();
 
@@ -20,7 +20,7 @@ app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
 
 //加载日志中间件
-log4js.use(app);
+//log4js.use(app);
 
 app.use(logger('dev'));
 app.use(express.json());
