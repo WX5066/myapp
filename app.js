@@ -3,13 +3,17 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+const AV = require('leanengine');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const ejs = require('ejs');
 //const log4js = require('./mid/log');
 
 var app = express();
+
+
+//设置Leancloud Express中间件
+app.use(AV.express());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
