@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "startwin": "set DEBUG=expressapp:* & nodemon ./bin/www"
   },
   "engines": {
     "node": "8.x"
