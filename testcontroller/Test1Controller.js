@@ -3,7 +3,7 @@
 const AV = require('leanengine');
 const FS = require('fs');
 const redisClient = require('redis');
-var logger = require('../mid/log').logger("Test1Controller", 'debug');
+//var logger = require('../mid/log').logger("Test1Controller", 'debug');
 var Multiparty = require('multiparty');
 async function a(){
 
@@ -24,7 +24,7 @@ class Test1Controller{
 		
 		if(list.length > 0){
 			console.log(list[0].attributes.username);
-			logger.error((new Date()) + list[0].attributes.username);
+			//logger.error((new Date()) + list[0].attributes.username);
 			
 			return res.json({
 				status : false,
