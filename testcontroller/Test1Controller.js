@@ -16,6 +16,11 @@ class Test1Controller{
 		res.send("查询成功");
 	}
 
+	async query2(req, res){
+		res.send("第二个版本");
+	}
+
+
 	async test1(req, res, next){
 		const {name, password} = req.query;
 		const query = new AV.Query('user');
