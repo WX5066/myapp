@@ -16,7 +16,6 @@ class Test1Controller{
 		res.send("查询成功");
 	}
 
-
 	async test1(req, res, next){
 		const {name, password} = req.query;
 		const query = new AV.Query('user');
