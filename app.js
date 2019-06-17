@@ -7,10 +7,20 @@ const AV = require('leanengine');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const ejs = require('ejs');
+
+const timeout = require('connect-timeout');
+
 //const log4js = require('./mid/log');
+const zmqServer = require('./zeromq/simple_req/zmqServer');
+const zmqReqBroker = require('./zeromq/reqbroker/zmqReqBroker');
+const zmqReqServer = require('./zeromq/reqbroker/zmqReqBrokerServer');
+const zmqReqServer1 = require('./zeromq/reqbroker/zmqReqBrokerServer1');
 
+const ventilator = require('./zeromq/push-pull/ventilator');
+const worker = require('./zeromq/push-pull/worker');
+const worker1 = require('./zeromq/push-pull/worker1');
+const sink = require('./zeromq/push-pull/sink');
 var app = express();
-
 
 //设置Leancloud Express中间件
 app.use(AV.express());
@@ -35,6 +45,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+//设置超时
+app.use(timeout('3s'));
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -48,6 +61,7 @@ app.all('/*', function (req, res, next) {
 });
 // error handler
 app.use(function(err, req, res, next) {
+  console.log('7898');
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

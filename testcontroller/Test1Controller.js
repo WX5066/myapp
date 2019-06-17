@@ -2,19 +2,73 @@
 
 const AV = require('leanengine');
 const FS = require('fs');
-const redisClient = require('redis');
+//const redisClient = require('redis');
 //var logger = require('../mid/log').logger("Test1Controller", 'debug');
 var Multiparty = require('multiparty');
-async function a(){
+const zmqCli = require('../zeromq/simple_req/zmqCli');
+const zmqBrokerCli = require('../zeromq/reqbroker/zmqBrokerCli');
+const ventilator = require('../zeromq/push-pull/ventilator');
 
-}
 class Test1Controller{
 	constructer(){
 
 	}
 	async query1(req, res){
-		res.send("查询成功");
+		setTimeout(function(){
+			console.log('5');
+			res.send("查询成功");
+		},5000);
+		
 	}
+	/**
+	 * broker 代理
+	 * @param {*} req 
+	 * @param {*} res 
+	 */
+	async zmqBroker(req, res){
+		for (let index = 0; index <1000; index++) {
+			zmqBrokerCli.sendmsg("wx");//耗时26s
+		}
+		res.send("ok");
+	}
+
+	/**
+	 * 简单 请求-回复 模型
+	 */
+	async zmq(req, res){
+		for (let index = 0; index <1000; index++) {
+			zmqCli.sendmsg({"Hello":"Hello"});//耗时17s
+		}
+		//zmqCli.getZmqClient().send("1");
+		
+		res.send("哈哈");
+	}
+	/**
+	 *   push-pull模型使用多任务并发
+	 */
+	async zmqpush(req, res){
+		for (let index = 0; index <1; index++) {
+			ventilator.work("wx");//
+		}
+		res.send("哈哈");
+		
+	}
+
+
+	async zmq1(req, res){
+		//zmqCli.getZmqClient().send("1");
+		zmqCli.sendmsg({"Hello":"world"});
+		console.log("打印2.2");
+		res.send("哈哈1.0");
+	}
+
+	async zmq2(req, res){
+		//zmqCli.getZmqClient().send("1");
+		zmqCli.sendmsg('w');
+		console.log("打印3.0");
+		res.send("哈哈3.0");
+	}
+
 
 	async query2(req, res){
 		res.send("第二个版本");
